@@ -6,8 +6,10 @@ class Scene_play extends Phaser.Scene {
 		super({key: 'Scene_play'});
 	}
 	create() {
-		var center_width = this.sys.game.config.width/2;
-		var center_height = this.sys.game.config.height/2;
+		let center_width = this.sys.game.config.width/2;
+		let center_height = this.sys.game.config.height/2;
+		this.left_points = this.add.text(center_width/2, 16, '0', { fontSize: '20px', fill: '#fff' });
+		this.right_points = this.add.text(this.sys.game.config.width-center_width/2, 16, '0', { fontSize: '20px', fill: '#fff' });
 		this.add.image(center_width, center_height, "separator");
 		// Palettes	
 		this.left = new palettes(this, 25, center_height, 'left_pallete');
@@ -34,12 +36,12 @@ class Scene_play extends Phaser.Scene {
 	update(time, delta) {
 		if (this.ball.x < 0) {
 			this.ball.setPosition(this.sys.game.config.width/2, this.sys.game.config.height/2);
-			left_points++;
-			console.log("Left: " + left_points);
+			right_points++;
+			this.right_points.setText(right_points);
 		} else if (this.ball.x > this.sys.game.config.width) {
 			this.ball.setPosition(this.sys.game.config.width/2, this.sys.game.config.height/2);
-			right_points++;
-			console.log("Right: " + right_points);
+			left_points++;
+			this.left_points.setText(left_points);
 		}
 
 		// Control palettes
